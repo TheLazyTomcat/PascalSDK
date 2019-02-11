@@ -163,16 +163,16 @@ type
 Function APIStringToTelemetryString(const Str: scs_string_t): TelemetryString;
 Function TelemetryStringToAPIString(const Str: TelemetryString): scs_string_t;
 procedure APIStringFree(var Str: scs_string_t);
-Function TelemetryStringDecode(const Str: TelemetryString): String;
-Function TelemetryStringEncode(const Str: String): TelemetryString;
-Function APIString(const Str: TelemetryString): scs_string_t; overload;
+Function TelemetryStringDecode(const Str: TelemetryString): String;{$IFDEF CanInline} inline;{$ENDIF}
+Function TelemetryStringEncode(const Str: String): TelemetryString;{$IFDEF CanInline} inline;{$ENDIF}
+Function APIString(const Str: TelemetryString): scs_string_t; overload;{$IFDEF CanInline} inline;{$ENDIF}
 
 // Routines replacing some of the C macros functionality.
-Function SCSCheckSize(ActualSize, {%H-}Expected32,{%H-}Expected64: Cardinal): Boolean;
+Function SCSCheckSize(ActualSize,Expected32,Expected64: Cardinal): Boolean;{$IFDEF CanInline} inline;{$ENDIF}
 
-Function SCSMakeVersion(Major, Minor: scs_u16_t): scs_u32_t;
-Function SCSGetMajorVersion(Version: scs_u32_t): scs_u16_t;
-Function SCSGetMinorVersion(Version: scs_u32_t): scs_u16_t;
+Function SCSMakeVersion(Major, Minor: scs_u16_t): scs_u32_t;{$IFDEF CanInline} inline;{$ENDIF}
+Function SCSGetMajorVersion(Version: scs_u32_t): scs_u16_t;{$IFDEF CanInline} inline;{$ENDIF}
+Function SCSGetMinorVersion(Version: scs_u32_t): scs_u16_t;{$IFDEF CanInline} inline;{$ENDIF}
 Function SCSGetVersionAsString(Version: scs_u32_t): String;
 (*</interface>*)
 
@@ -252,6 +252,7 @@ end;
 
 //------------------------------------------------------------------------------
 
+{$IFDEF FPC}{$PUSH}{$WARN 5024 OFF}{$ENDIF} // supress warnings about unused parameters
 Function SCSCheckSize(ActualSize, Expected32, Expected64: Cardinal): Boolean;
 begin
 {$IFDEF SCS_ARCHITECTURE_x64}
@@ -261,10 +262,11 @@ begin
   Result := ActualSize = Expected32;
   {$ELSE}
   {$MESSAGE FATAL 'Undefined architecture!'}  //better prevent compilation
-  Halt(666); //architecture is not known, initiate immediate abnormal termination
+  Halt; //architecture is not known, initiate immediate abnormal termination
   {$ENDIF}
 {$ENDIF}
 end;
+{$IFDEF FPC}{$POP}{$ENDIF}
 
 //------------------------------------------------------------------------------
 
