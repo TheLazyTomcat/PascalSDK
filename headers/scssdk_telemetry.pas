@@ -25,8 +25,8 @@ uses
  *)
 //@{
 const
-  SCS_TELEMETRY_VERSION_1_00    = scs_u32_t((1 shl 16) or 0); // 0x00010000
-  SCS_TELEMETRY_VERSION_1_01    = scs_u32_t((1 shl 16) or 1); // 0x00010001
+  SCS_TELEMETRY_VERSION_1_00    = scs_u32_t((1 shl 16) or 0){0x00010000};
+  SCS_TELEMETRY_VERSION_1_01    = scs_u32_t((1 shl 16) or 1){0x00010001};
   SCS_TELEMETRY_VERSION_CURRENT = SCS_TELEMETRY_VERSION_1_01;
 //@}
 

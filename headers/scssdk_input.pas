@@ -21,7 +21,7 @@ uses
  *)
 //@{
 const
-  SCS_INPUT_VERSION_1_00    = scs_u32_t((1 shl 16) or 0); // 0x00010000
+  SCS_INPUT_VERSION_1_00    = scs_u32_t((1 shl 16) or 0){0x00010000};
   SCS_INPUT_VERSION_CURRENT = SCS_INPUT_VERSION_1_00;
 //@}
 
