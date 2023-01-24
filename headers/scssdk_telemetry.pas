@@ -37,6 +37,8 @@ const
  * initialization.
  *)
 {
+  No working analog in pascal for the original code.
+
 type
   scs_telemetry_init_params_t = record
     procedure method_indicating_this_is_not_a_c_struct;
