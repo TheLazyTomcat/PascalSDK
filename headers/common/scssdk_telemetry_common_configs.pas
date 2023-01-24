@@ -10,7 +10,7 @@
  *)
 unit scssdk_telemetry_common_configs;
 
-{$INCLUDE '../scssdk_defs.inc'}
+{$INCLUDE '..\scssdk_defs.inc'}
 
 interface
 

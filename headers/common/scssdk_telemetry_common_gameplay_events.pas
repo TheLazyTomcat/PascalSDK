@@ -5,7 +5,7 @@
  *)
 unit scssdk_telemetry_common_gameplay_events;
 
-{$INCLUDE '../scssdk_defs.inc'}
+{$INCLUDE '..\scssdk_defs.inc'}
 
 interface
 

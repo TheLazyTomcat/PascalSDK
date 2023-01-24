@@ -23,7 +23,7 @@
  *)
 unit scssdk_telemetry_truck_common_channels;
 
-{$INCLUDE '../scssdk_defs.inc'}
+{$INCLUDE '..\scssdk_defs.inc'}
 
 interface
 

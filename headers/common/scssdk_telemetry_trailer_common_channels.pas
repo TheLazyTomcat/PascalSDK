@@ -7,7 +7,7 @@
  *)
 unit scssdk_telemetry_trailer_common_channels;
 
-{$INCLUDE '../scssdk_defs.inc'}
+{$INCLUDE '..\scssdk_defs.inc'}
 
 interface
 

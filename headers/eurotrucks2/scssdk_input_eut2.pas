@@ -5,7 +5,7 @@
  *)
 unit scssdk_input_eut2;
 
-{$INCLUDE '../scssdk_defs.inc'}
+{$INCLUDE '..\scssdk_defs.inc'}
 
 interface
 
