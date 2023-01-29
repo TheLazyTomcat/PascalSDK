@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_telemetry_common_configs.h
  *
@@ -16,6 +17,8 @@ interface
 
 uses
   scssdk;
+  
+(*<interface>*)
 
 (**
  * @brief The count of the trailers supported by SDK.
@@ -649,7 +652,10 @@ const
  * Type: bool
  *)
   SCS_TELEMETRY_CONFIG_ATTRIBUTE_special_job = TelemetryString('is.special.job');
+  
+(*</interface>*)
 
 implementation
 
+(*</unit>*)
 end.

@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_input_ats.h
  *
@@ -11,6 +12,8 @@ interface
 
 uses
   scssdk;
+  
+(*<interface>*)
 
 (**
  * @name Value used in the scs_sdk_init_params_t::game_version
@@ -27,6 +30,9 @@ const
   SCS_INPUT_ATS_GAME_VERSION_CURRENT = SCS_INPUT_ATS_GAME_VERSION_1_00;
 //@}
 
+(*</interface>*)
+
 implementation
 
+(*</unit>*)
 end.

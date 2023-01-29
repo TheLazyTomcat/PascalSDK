@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_telemetry_truck_common_channels.h
  *
@@ -29,6 +30,8 @@ interface
 
 uses
   scssdk;
+  
+(*<interface>*)
 
 // Movement.
 
@@ -761,7 +764,10 @@ const
  * Type: indexed float
  *)
   SCS_TELEMETRY_TRUCK_CHANNEL_wheel_lift_offset = TelemetryString('truck.wheel.lift.offset');
+  
+(*</interface>*)
 
 implementation
 
+(*</unit>*)
 end.

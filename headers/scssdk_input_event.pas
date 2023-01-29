@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_input_event.h
  *
@@ -12,6 +13,8 @@ interface
 uses
   scssdk,
   scssdk_value;
+
+(*<interface>*)
 
 (**
  * @brief Information about a input event.
@@ -63,11 +66,16 @@ const
 type
   scs_input_event_callback_t = Function(event_info: p_scs_input_event_t; flags: scs_u32_t; context: scs_context_t): scs_result_t; {$IFDEF Windows}stdcall{$ELSE}cdecl{$ENDIF};
 
+(*</interface>*)
+
 implementation
 
 {$IFDEF AssertTypeSize}
 initialization
+(*<initialization>*)
   Assert(scs_check_size(SizeOf(scs_input_event_t),28,28));
+(*</initialization>*)
 {$ENDIF}
 
+(*</unit>*)
 end.

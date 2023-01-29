@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_input_device.h
  *
@@ -13,6 +14,8 @@ uses
   scssdk,
   scssdk_value,
   scssdk_input_event;
+
+(*<interface>*)
 
 (**
  * @name Types of input devices.
@@ -186,12 +189,17 @@ type
  *)
   scs_input_register_device_t = Function(device_info: p_scs_input_device_t): scs_result_t; {$IFDEF Windows}stdcall{$ELSE}cdecl{$ENDIF};
 
+(*</interface>*)
+
 implementation
 
 {$IFDEF AssertTypeSize}
 initialization
+(*<initialization>*)
   Assert(scs_check_size(SizeOf(scs_input_device_input_t),12,24));
   Assert(scs_check_size(SizeOf(scs_input_device_t),32,56));
+(*</initialization>*)
 {$ENDIF}
 
+(*</unit>*)
 end.

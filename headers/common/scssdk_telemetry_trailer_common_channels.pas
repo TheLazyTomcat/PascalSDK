@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_telemetry_trailer_common_channels.h
  *
@@ -13,6 +14,8 @@ interface
 
 uses
   scssdk;
+  
+(*<interface>*)
 
 (**
  * Telemetry SDK supports multiple trailers.
@@ -76,6 +79,9 @@ const
   SCS_TELEMETRY_TRAILER_CHANNEL_wheel_lift_offset     = TelemetryString('trailer.wheel.lift.offset');
 //@}
 
+(*</interface>*)
+
 implementation
 
+(*</unit>*)
 end.

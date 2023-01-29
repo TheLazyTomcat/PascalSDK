@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_value.h
  *
@@ -11,6 +12,8 @@ interface
 
 uses
   scssdk;
+
+(*<interface>*)
 
 type
   scs_value_type_t = scs_u32_t;
@@ -229,12 +232,15 @@ type
      *)
     value:    scs_value_t;
   end;
-  p_scs_named_value_t = ^scs_named_value_t;  
+  p_scs_named_value_t = ^scs_named_value_t; 
+   
+(*</interface>*)
 
 implementation
 
 {$IFDEF AssertTypeSize}
 initialization
+(*<initialization>*)
   Assert(scs_check_size(SizeOf(scs_value_bool_t),1,1));
   Assert(scs_check_size(SizeOf(scs_value_s32_t),4,4));
   Assert(scs_check_size(SizeOf(scs_value_u32_t),4,4));
@@ -249,6 +255,8 @@ initialization
   Assert(scs_check_size(SizeOf(scs_value_string_t),4,8));
   Assert(scs_check_size(SizeOf(scs_value_t),48,48));
   Assert(scs_check_size(SizeOf(scs_named_value_t),56,64));
+(*</initialization>*)
 {$ENDIF}
 
+(*</unit>*)
 end.

@@ -1,3 +1,4 @@
+(*<body>*)
 {$IF defined(CPUX86_64) or defined(CPUX64)}
   {$DEFINE SCS_ARCHITECTURE_x64}
 {$ELSEIF defined(CPU386)}
@@ -28,3 +29,4 @@
 {$ELSE}
   {$UNDEF AssertTypeSize}
 {$ENDIF}
+(*</body>*)

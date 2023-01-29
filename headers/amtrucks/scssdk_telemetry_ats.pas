@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_telemetry_ats.h
  *
@@ -11,6 +12,8 @@ interface
 
 uses
   scssdk;
+  
+(*<interface>*)
 
 (**
  * @name Value used in the scs_sdk_init_params_t::game_version
@@ -68,6 +71,9 @@ const
 // @li The localized strings are not updated when different in-game
 //     language is selected.
 
+(*</interface>*)
+
 implementation
 
+(*</unit>*)
 end.

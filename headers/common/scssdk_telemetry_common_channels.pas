@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_telemetry_common_channels.h
  *
@@ -11,6 +12,8 @@ interface
 
 uses
   scssdk;
+  
+(*<interface>*)
 
 (**
  * @brief Scale applied to distance and time to compensate
@@ -62,7 +65,10 @@ const
  * Type: s32
  *)
   SCS_TELEMETRY_CHANNEL_next_rest_stop = TelemetryString('rest.stop');
+  
+(*</interface>*)
 
 implementation
 
+(*</unit>*)
 end.

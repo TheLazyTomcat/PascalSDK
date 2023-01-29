@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_telemetry_job_common_channels.h
  *
@@ -11,6 +12,8 @@ interface
 
 uses
   scssdk;
+  
+(*<interface>*)
 
 (**
  * @brief The total damage of the cargo in range 0.0 to 1.0.
@@ -19,7 +22,10 @@ uses
  *)
 const
   SCS_TELEMETRY_JOB_CHANNEL_cargo_damage = TelemetryString('job.cargo.damage');
+  
+(*</interface>*)
 
 implementation
 
+(*</unit>*)
 end.

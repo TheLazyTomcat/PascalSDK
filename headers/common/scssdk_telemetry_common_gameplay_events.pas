@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_telemetry_common_gameplay_events.h
  *
@@ -11,6 +12,8 @@ interface
 
 uses
   scssdk;
+  
+(*<interface>*)
 
 (**
  * @brief Event called when job is cancelled.
@@ -198,7 +201,10 @@ const
  * Type: string
  *)
   SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_target_id = TelemetryString('target.id');
+  
+(*</interface>*)
 
 implementation
 
+(*</unit>*)
 end.

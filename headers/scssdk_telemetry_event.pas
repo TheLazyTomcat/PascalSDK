@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_telemetry_event.h
  *
@@ -12,6 +13,8 @@ interface
 uses
   scssdk,
   scssdk_value;
+
+(*<interface>*)
 
 type
   scs_event_t = scs_u32_t;
@@ -234,13 +237,18 @@ type
  *)
   scs_telemetry_unregister_from_event_t =  Function(event: scs_event_t): scs_result_t; {$IFDEF Windows}stdcall{$ELSE}cdecl{$ENDIF};
 
+(*</interface>*)
+
 implementation
 
 {$IFDEF AssertTypeSize}
 initialization
+(*<initialization>*)
   Assert(scs_check_size(SizeOf(scs_telemetry_frame_start_t),32,32));
   Assert(scs_check_size(SizeOf(scs_telemetry_configuration_t),8,16));
   Assert(scs_check_size(SizeOf(scs_telemetry_gameplay_event_t),8,16));
+(*</initialization>*)
 {$ENDIF}
 
+(*</unit>*)
 end.

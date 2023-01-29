@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_telemetry.h
  *
@@ -13,6 +14,8 @@ uses
   scssdk,
   scssdk_telemetry_event,
   scssdk_telemetry_channel;
+
+(*<interface>*)
 
 (**
  * @name Versions of the telemetry SDK
@@ -110,12 +113,17 @@ type
  * success.
  *)
   scs_telemetry_shutdown = procedure; {$IFDEF Windows}stdcall{$ELSE}cdecl{$ENDIF};
+  
+(*</interface>*)
 
 implementation
 
 {$IFDEF AssertTypeSize}
 initialization
+(*<initialization>*)
   Assert(scs_check_size(SizeOf(scs_telemetry_init_params_v100_t),32,64));
+(*</initialization>*)
 {$ENDIF}
 
-end.
+(*</unit>*)
+end. 

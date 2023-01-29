@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_telemetry_channel.h
  *
@@ -12,6 +13,8 @@ interface
 uses
   scssdk,
   scssdk_value;
+
+(*<interface>*)
 
 (**
  * @name Telemetry channel flags.
@@ -102,7 +105,9 @@ type
  *)
   scs_telemetry_unregister_from_channel_t = Function(name: scs_string_t; index: scs_u32_t; _type: scs_value_type_t): scs_result_t; {$IFDEF Windows}stdcall{$ELSE}cdecl{$ENDIF};
 
+(*</interface>*)
 
 implementation
 
+(*</unit>*)
 end.

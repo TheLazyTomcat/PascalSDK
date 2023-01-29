@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_eut2.h
  *
@@ -11,13 +12,18 @@ interface
 
 uses
   scssdk;
+  
+(*<interface>*)
 
 (**
  * @brief Value used in the scs_sdk_init_params_t::game_id to identify this game.
  *)
 const
   SCS_GAME_ID_EUT2 = TelemetryString('eut2');
+  
+(*</interface>*)
 
 implementation
 
+(*</unit>*)
 end.

@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk_input.h
  *
@@ -12,6 +13,8 @@ interface
 uses
   scssdk,
   scssdk_input_device;
+
+(*<interface>*)
 
 (**
  * @name Versions of the input SDK
@@ -86,12 +89,17 @@ type
  * success.
  *)
   scs_input_shutdown = procedure; {$IFDEF Windows}stdcall{$ELSE}cdecl{$ENDIF};
+  
+(*</interface>*)
 
 implementation
 
 {$IFDEF AssertTypeSize}
 initialization
+(*<initialization>*)
   Assert(scs_check_size(SizeOf(scs_input_init_params_v100_t),20,40));
+(*</initialization>*)
 {$ENDIF}
 
+(*</unit>*)
 end.

@@ -1,3 +1,4 @@
+(*<unit>*)
 (**
  * @file scssdk.h
  *
@@ -12,6 +13,7 @@ interface
 uses
   AuxTypes, StrRect;
 
+(*<interface>*)
 {
   TelemetryString
 
@@ -223,10 +225,14 @@ Function TelemetryStringDecode(const Str: TelemetryString): String;{$IFDEF CanIn
 }
 Function TelemetryStringEncode(const Str: String): TelemetryString;{$IFDEF CanInline} inline;{$ENDIF}
 
+(*</interface>*)
+
 implementation
 
 uses
   SysUtils;
+  
+(*<implementation>*)
 
 {$IFDEF FPC}{$PUSH}{$WARN 5024 OFF}{$ENDIF} // supress warnings about unused parameters
 Function scs_check_size(actual,expected_32,expected_64: TMemSize): Boolean;
@@ -324,11 +330,16 @@ begin
 Result := StrRect.StrToUTF8(Str);
 end;
 
+(*</implementation>*)
+
 //==============================================================================
 
 {$IFDEF AssertTypeSize}
 initialization
+(*<initialization>*)
   Assert(scs_check_size(SizeOf(scs_sdk_init_params_v100_t),16,32));
+(*</initialization>*)
 {$ENDIF}
 
+(*</unit>*)
 end.
