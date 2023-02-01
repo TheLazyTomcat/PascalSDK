@@ -7,7 +7,7 @@
 -------------------------------------------------------------------------------}
 {===============================================================================
 
-  TelemetrySDK
+  PascalSDK
 
     A translation of SCS Software's SDK (SCS SDK) for data exchange and
     communication between a running game and a loaded dynamic library into
@@ -31,7 +31,7 @@
   Changelog:
     For detailed changelog and history please refer to this git repository:
 
-      github.com/TheLazyTomcat/TelemetrySDK
+      github.com/TheLazyTomcat/PascalSDK
 
   Dependencies:
     AuxTypes - github.com/TheLazyTomcat/Lib.AuxTypes
@@ -55,13 +55,13 @@ uses
 
 (*<interface>*)
 {
-  TelemetryString
+  SDKString
 
   String type intended to hold strings for/from the API in a pascal-friendly
-  way (that is, as managed, reference counted, copy-on-write string).
+  way (that is as managed, reference counted, copy-on-write string).
 }
 type
-  TelemetryString = type UTF8String;
+  SDKString = type UTF8String;
 
   // Types used trough the SDK.
   scs_u8_t  = UInt8;          p_scs_u8_t  = ^scs_u8_t;
@@ -208,23 +208,23 @@ Function SCS_VERSION_AS_STRING(version: scs_u32_t): String;
 
   Use this function to pass static strings to the API.
 }
-Function APIString(const Str: TelemetryString): scs_string_t; overload;{$IFDEF CanInline} inline;{$ENDIF}
+Function APIString(const Str: SDKString): scs_string_t; overload;{$IFDEF CanInline} inline;{$ENDIF}
 
 {
-  APIStringToTelemetryString
+  APIStringToSDKString
 
-  Creates new variable of type TelemetryString, fills it with content of Str
-  and then returns it.
+  Creates new variable of type SDKString, fills it with content of Str and then
+  returns it.
   If the Str parameter is not assigned or is empty, then it will return an
-  empty string;
+  empty string.
 
   Use this function if you want to store strings returned from the API for
   later use.
 }
-Function APIStringToTelemetryString(const Str: scs_string_t): TelemetryString;
+Function APIStringToSDKString(const Str: scs_string_t): SDKString;
 
 {
-  TelemetryStringToAPIString
+  SDKStringToAPIString
 
   Allocates new memory, fills it with content of Str and then returns pointer
   to it.
@@ -237,33 +237,32 @@ Function APIStringToTelemetryString(const Str: scs_string_t): TelemetryString;
   Use of this function is limited at this moment, it is here for the sake of
   completeness and a possible future use.
 }
-Function TelemetryStringToAPIString(const Str: TelemetryString): scs_string_t;
+Function SDKStringToAPIString(const Str: SDKString): scs_string_t;
 
 {
-  TelemetryStringToAPIString
+  SDKStringToAPIString
 
-  Frees memory allocated by TelemetryStringToAPIString and sets the pointer to
-  nil.
+  Frees memory allocated by SDKStringToAPIString and sets the pointer to nil.
 }
 procedure APIStringFree(var Str: scs_string_t);
 
 {
-  TelemetryStringDecode
+  SDKStringDecode
 
-  Converts TelemetryString type to default string type.
+  Converts SDKString type to default string type.
 
   As default strings can be widly different depending on compiler, its version,
   used component library and other things, never do direct assignment between
-  TelemetryString type and String type, always do the conversion.
+  SDKString type and String type, always do the conversion.
 }
-Function TelemetryStringDecode(const Str: TelemetryString): String;{$IFDEF CanInline} inline;{$ENDIF}
+Function SDKStringDecode(const Str: SDKString): String;{$IFDEF CanInline} inline;{$ENDIF}
 
 {
-  TelemetryStringEncode
+  SDKStringEncode
 
-  Converts default string type to TelemetryString type.
+  Converts default string type to SDKString type.
 }
-Function TelemetryStringEncode(const Str: String): TelemetryString;{$IFDEF CanInline} inline;{$ENDIF}
+Function SDKStringEncode(const Str: String): SDKString;{$IFDEF CanInline} inline;{$ENDIF}
 
 (*</interface>*)
 
@@ -318,14 +317,14 @@ end;
 
 //==============================================================================
 
-Function APIString(const Str: TelemetryString): scs_string_t;
+Function APIString(const Str: SDKString): scs_string_t;
 begin
 Result := scs_string_t(PUTF8Char(Str));
 end;
 
 //------------------------------------------------------------------------------
 
-Function APIStringToTelemetryString(const Str: scs_string_t): TelemetryString;
+Function APIStringToSDKString(const Str: scs_string_t): SDKString;
 begin
 If Assigned(Str) then
   begin
@@ -337,7 +336,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-Function TelemetryStringToAPIString(const Str: TelemetryString): scs_string_t;
+Function SDKStringToAPIString(const Str: SDKString): scs_string_t;
 begin
 If Length(Str) > 0 then
   Result := scs_string_t(StrNew(PAnsiChar(Str)))
@@ -358,14 +357,14 @@ end;
 
 //------------------------------------------------------------------------------
 
-Function TelemetryStringDecode(const Str: TelemetryString): String;
+Function SDKStringDecode(const Str: SDKString): String;
 begin
 Result := StrRect.UTF8ToStr(Str);
 end;
 
 //------------------------------------------------------------------------------
 
-Function TelemetryStringEncode(const Str: String): TelemetryString;
+Function SDKStringEncode(const Str: String): SDKString;
 begin
 Result := StrRect.StrToUTF8(Str);
 end;

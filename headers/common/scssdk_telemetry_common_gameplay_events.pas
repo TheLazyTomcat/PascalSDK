@@ -22,7 +22,7 @@ uses
  * @li cancel_penalty
  *)
 const 
-  SCS_TELEMETRY_GAMEPLAY_EVENT_job_cancelled = TelemetryString('job.cancelled');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_job_cancelled = SDKString('job.cancelled');
 
 (**
  * @brief Event called when job is delivered.
@@ -36,7 +36,7 @@ const
  * @li autopark_used
  * @li autoload_used
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_job_delivered = TelemetryString('job.delivered');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_job_delivered = SDKString('job.delivered');
 
 (**
  * @brief Event called when player gets fined.
@@ -45,7 +45,7 @@ const
  * @li fine_offence
  * @li fine_amount
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_player_fined = TelemetryString('player.fined');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_player_fined = SDKString('player.fined');
 
 (**
  * @brief Event called when player pays for a tollgate.
@@ -53,7 +53,7 @@ const
  * Attributes:
  * @li pay_amount
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_player_tollgate_paid = TelemetryString('player.tollgate.paid');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_player_tollgate_paid = SDKString('player.tollgate.paid');
 
 (**
  * @brief Event called when player uses a ferry.
@@ -65,7 +65,7 @@ const
  * @li source_id
  * @li target_id
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_player_use_ferry = TelemetryString('player.use.ferry');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_player_use_ferry = SDKString('player.use.ferry');
 
 (**
  * @brief Event called when player uses a train.
@@ -77,7 +77,7 @@ const
  * @li source_id
  * @li target_id
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_player_use_train = TelemetryString('player.use.train');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_player_use_train = SDKString('player.use.train');
 
 // Attributes
 
@@ -86,56 +86,56 @@ const
  *
  * Type: s64
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_cancel_penalty = TelemetryString('cancel.penalty');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_cancel_penalty = SDKString('cancel.penalty');
 
 (**
  * @brief The job revenue in native game currency.
  *
  * Type: s64
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_revenue = TelemetryString('revenue');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_revenue = SDKString('revenue');
 
 (**
  * @brief How much XP player received for the job.
  *
  * Type: s32
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_earned_xp = TelemetryString('earned.xp');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_earned_xp = SDKString('earned.xp');
 
 (**
  * @brief Total cargo damage. (Range <0.0, 1.0>)
  *
  * Type: float
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_cargo_damage = TelemetryString('cargo.damage');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_cargo_damage = SDKString('cargo.damage');
 
 (**
  * @brief The real distance in km on the job.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_distance_km = TelemetryString('distance.km');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_distance_km = SDKString('distance.km');
 
 (**
  * @brief Total time spend on the job in game minutes.
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_delivery_time = TelemetryString('delivery.time');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_delivery_time = SDKString('delivery.time');
 
 (**
  * @brief Was auto parking used on this job?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_auto_park_used = TelemetryString('auto.park.used');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_auto_park_used = SDKString('auto.park.used');
 
 (**
  * @brief Was auto loading used on this job? (always @c true for non cargo market jobs)
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_auto_load_used = TelemetryString('auto.load.used');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_auto_load_used = SDKString('auto.load.used');
 
 (**
  * @brief Fine offence type.
@@ -158,49 +158,49 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_fine_offence = TelemetryString('fine.offence');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_fine_offence = SDKString('fine.offence');
 
 (**
  * @brief Fine offence amount in native game currency.
  *
  * Type: s64
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_fine_amount = TelemetryString('fine.amount');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_fine_amount = SDKString('fine.amount');
 
 (**
  * @brief How much player was charged for this action (in native game currency)
  *
  * Type: s64
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_pay_amount = TelemetryString('pay.amount');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_pay_amount = SDKString('pay.amount');
 
 (**
  * @brief The name of the transportation source.
  *
  * Type: string
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_source_name = TelemetryString('source.name');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_source_name = SDKString('source.name');
 
 (**
  * @brief The name of the transportation target.
  *
  * Type: string
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_target_name = TelemetryString('target.name');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_target_name = SDKString('target.name');
 
 (**
  * @brief The id of the transportation source.
  *
  * Type: string
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_source_id = TelemetryString('source.id');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_source_id = SDKString('source.id');
 
 (**
  * @brief The id of the transportation target.
  *
  * Type: string
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_target_id = TelemetryString('target.id');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_target_id = SDKString('target.id');
   
 (*</interface>*)
 

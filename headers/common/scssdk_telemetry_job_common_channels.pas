@@ -21,7 +21,7 @@ uses
  * Type: float
  *)
 const
-  SCS_TELEMETRY_JOB_CHANNEL_cargo_damage = TelemetryString('job.cargo.damage');
+  SCS_TELEMETRY_JOB_CHANNEL_cargo_damage = SDKString('job.cargo.damage');
   
 (*</interface>*)
 

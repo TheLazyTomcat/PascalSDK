@@ -26,7 +26,7 @@ uses
  * Type: float
  *)
 const
-  SCS_TELEMETRY_CHANNEL_local_scale = TelemetryString('local.scale');
+  SCS_TELEMETRY_CHANNEL_local_scale = SDKString('local.scale');
 
 (**
  * @brief Absolute in-game time.
@@ -36,7 +36,7 @@ const
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_CHANNEL_game_time = TelemetryString('game.time');
+  SCS_TELEMETRY_CHANNEL_game_time = SDKString('game.time');
 
 (**
  * @brief Offset from the game_time simulated in the local economy to the
@@ -51,7 +51,7 @@ const
  *
  * Type: s32
  *)
-  SCS_TELEMETRY_CHANNEL_multiplayer_time_offset = TelemetryString('multiplayer.time.offset');
+  SCS_TELEMETRY_CHANNEL_multiplayer_time_offset = SDKString('multiplayer.time.offset');
 
 (**
  * @brief Time until next rest stop.
@@ -64,7 +64,7 @@ const
  *
  * Type: s32
  *)
-  SCS_TELEMETRY_CHANNEL_next_rest_stop = TelemetryString('rest.stop');
+  SCS_TELEMETRY_CHANNEL_next_rest_stop = SDKString('rest.stop');
   
 (*</interface>*)
 

@@ -7,7 +7,7 @@
 -------------------------------------------------------------------------------}
 {===============================================================================
 
-  TelemetrySDK
+  Pascal SCS SDK
 
     A translation of SCS Software's SDK (SCS SDK) for data exchange and
     communication between a running game and a loaded dynamic library into
@@ -31,14 +31,14 @@
   Changelog:
     For detailed changelog and history please refer to this git repository:
 
-      github.com/TheLazyTomcat/TelemetrySDK
+      github.com/TheLazyTomcat/Pascal_SCS_SDK
 
   Dependencies:
     AuxTypes - github.com/TheLazyTomcat/Lib.AuxTypes
     StrRect  - github.com/TheLazyTomcat/Lib.StrRect
 
 ===============================================================================}
-unit TelemetrySDK;
+unit PascalSDK;
 
 {$IF defined(CPUX86_64) or defined(CPUX64)}
   {$DEFINE SCS_ARCHITECTURE_x64}
@@ -81,13 +81,13 @@ uses
 -------------------------------------------------------------------------------}
 
 {
-  TelemetryString
+  SDKString
 
   String type intended to hold strings for/from the API in a pascal-friendly
-  way (that is, as managed, reference counted, copy-on-write string).
+  way (that is as managed, reference counted, copy-on-write string).
 }
 type
-  TelemetryString = type UTF8String;
+  SDKString = type UTF8String;
 
   // Types used trough the SDK.
   scs_u8_t  = UInt8;          p_scs_u8_t  = ^scs_u8_t;
@@ -234,23 +234,23 @@ Function SCS_VERSION_AS_STRING(version: scs_u32_t): String;
 
   Use this function to pass static strings to the API.
 }
-Function APIString(const Str: TelemetryString): scs_string_t; overload;{$IFDEF CanInline} inline;{$ENDIF}
+Function APIString(const Str: SDKString): scs_string_t; overload;{$IFDEF CanInline} inline;{$ENDIF}
 
 {
-  APIStringToTelemetryString
+  APIStringToSDKString
 
-  Creates new variable of type TelemetryString, fills it with content of Str
-  and then returns it.
+  Creates new variable of type SDKString, fills it with content of Str and then
+  returns it.
   If the Str parameter is not assigned or is empty, then it will return an
-  empty string;
+  empty string.
 
   Use this function if you want to store strings returned from the API for
   later use.
 }
-Function APIStringToTelemetryString(const Str: scs_string_t): TelemetryString;
+Function APIStringToSDKString(const Str: scs_string_t): SDKString;
 
 {
-  TelemetryStringToAPIString
+  SDKStringToAPIString
 
   Allocates new memory, fills it with content of Str and then returns pointer
   to it.
@@ -263,33 +263,32 @@ Function APIStringToTelemetryString(const Str: scs_string_t): TelemetryString;
   Use of this function is limited at this moment, it is here for the sake of
   completeness and a possible future use.
 }
-Function TelemetryStringToAPIString(const Str: TelemetryString): scs_string_t;
+Function SDKStringToAPIString(const Str: SDKString): scs_string_t;
 
 {
-  TelemetryStringToAPIString
+  SDKStringToAPIString
 
-  Frees memory allocated by TelemetryStringToAPIString and sets the pointer to
-  nil.
+  Frees memory allocated by SDKStringToAPIString and sets the pointer to nil.
 }
 procedure APIStringFree(var Str: scs_string_t);
 
 {
-  TelemetryStringDecode
+  SDKStringDecode
 
-  Converts TelemetryString type to default string type.
+  Converts SDKString type to default string type.
 
   As default strings can be widly different depending on compiler, its version,
   used component library and other things, never do direct assignment between
-  TelemetryString type and String type, always do the conversion.
+  SDKString type and String type, always do the conversion.
 }
-Function TelemetryStringDecode(const Str: TelemetryString): String;{$IFDEF CanInline} inline;{$ENDIF}
+Function SDKStringDecode(const Str: SDKString): String;{$IFDEF CanInline} inline;{$ENDIF}
 
 {
-  TelemetryStringEncode
+  SDKStringEncode
 
-  Converts default string type to TelemetryString type.
+  Converts default string type to SDKString type.
 }
-Function TelemetryStringEncode(const Str: String): TelemetryString;{$IFDEF CanInline} inline;{$ENDIF}
+Function SDKStringEncode(const Str: String): SDKString;{$IFDEF CanInline} inline;{$ENDIF}
 
 {-------------------------------------------------------------------------------
   scssdk_value.pas
@@ -1262,14 +1261,14 @@ const
  * @li id
  * TODO: Whatever additional info necessary.
  *)
-  SCS_TELEMETRY_CONFIG_substances = TelemetryString('substances');
+  SCS_TELEMETRY_CONFIG_substances = SDKString('substances');
 
 (**
  * @brief Static configuration of the controls.
  *
  * @li shifter_type
  *)
-  SCS_TELEMETRY_CONFIG_controls = TelemetryString('controls');
+  SCS_TELEMETRY_CONFIG_controls = SDKString('controls');
 
 (**
  * @brief Configuration of the h-shifter.
@@ -1285,7 +1284,7 @@ const
  * @li handle position index for each slot
  * @li bitmask of selectors for each slot
  *)
-  SCS_TELEMETRY_CONFIG_hshifter = TelemetryString('hshifter');
+  SCS_TELEMETRY_CONFIG_hshifter = SDKString('hshifter');
 
 (**
  * @brief Static configuration of the truck.
@@ -1319,7 +1318,7 @@ const
  * @li wheel_count
  * @li wheel positions for wheel_count wheels
  *)
-  SCS_TELEMETRY_CONFIG_truck = TelemetryString('truck');
+  SCS_TELEMETRY_CONFIG_truck = SDKString('truck');
 
 (**
  * @brief Backward compatibility static configuration of the first trailer (attributes are equal to trailer.0).
@@ -1348,7 +1347,7 @@ const
  * @li wheel_count
  * @li wheel offsets for wheel_count wheels
  *)
-  SCS_TELEMETRY_CONFIG_trailer = TelemetryString('trailer');
+  SCS_TELEMETRY_CONFIG_trailer = SDKString('trailer');
 
 (**
  * @brief Static configuration of the job.
@@ -1374,7 +1373,7 @@ const
  * @li special_job
  * @li planned_distance_km
  *)
-  SCS_TELEMETRY_CONFIG_job = TelemetryString('job');
+  SCS_TELEMETRY_CONFIG_job = SDKString('job');
 
  // Attributes
 
@@ -1385,7 +1384,7 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_brand_id = TelemetryString('brand_id');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_brand_id = SDKString('brand_id');
 
  (**
  * @brief Brand for display purposes.
@@ -1394,7 +1393,7 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_brand = TelemetryString('brand');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_brand = SDKString('brand');
 
 (**
  * @brief Name for internal use by code.
@@ -1403,7 +1402,7 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_id = TelemetryString('id');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_id = SDKString('id');
 
 (**
  * @brief Name of cargo accessory for internal use by code.
@@ -1412,7 +1411,7 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cargo_accessory_id = TelemetryString('cargo.accessory.id');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cargo_accessory_id = SDKString('cargo.accessory.id');
 
 (**
  * @brief Name of trailer chain type.
@@ -1421,7 +1420,7 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_chain_type = TelemetryString('chain.type');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_chain_type = SDKString('chain.type');
 
 (**
  * @brief Name of trailer body type.
@@ -1430,28 +1429,28 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_body_type = TelemetryString('body.type');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_body_type = SDKString('body.type');
 
 (**
  * @brief Vehicle license plate.
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_license_plate = TelemetryString('license.plate');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_license_plate = SDKString('license.plate');
 
 (**
  * @brief The id representing license plate country.
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_license_plate_country_id = TelemetryString('license.plate.country.id');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_license_plate_country_id = SDKString('license.plate.country.id');
 
 (**
  * @brief The name of the license plate country.
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_license_plate_country = TelemetryString('license.plate.country');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_license_plate_country = SDKString('license.plate.country');
 
 (**
  * @brief Name for display purposes.
@@ -1460,14 +1459,14 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_name = TelemetryString('name');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_name = SDKString('name');
 
 (**
  * @brief  Fuel tank capacity in litres.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_fuel_capacity = TelemetryString('fuel.capacity');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_fuel_capacity = SDKString('fuel.capacity');
 
 (**
  * @brief Fraction of the fuel capacity below which
@@ -1475,14 +1474,14 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_fuel_warning_factor = TelemetryString('fuel.warning.factor');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_fuel_warning_factor = SDKString('fuel.warning.factor');
 
 (**
  * @brief  AdBlue tank capacity in litres.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_adblue_capacity = TelemetryString('adblue.capacity');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_adblue_capacity = SDKString('adblue.capacity');
 
 (**
  * @brief Fraction of the adblue capacity below which
@@ -1490,7 +1489,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_adblue_warning_factor = TelemetryString('adblue.warning.factor');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_adblue_warning_factor = SDKString('adblue.warning.factor');
 
 (**
  * @brief Pressure of the air in the tank below which
@@ -1498,7 +1497,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_air_pressure_warning = TelemetryString('brake.air.pressure.warning');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_air_pressure_warning = SDKString('brake.air.pressure.warning');
 
 (**
  * @brief Pressure of the air in the tank below which
@@ -1506,56 +1505,56 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_air_pressure_emergency = TelemetryString('brake.air.pressure.emergency');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_air_pressure_emergency = SDKString('brake.air.pressure.emergency');
 
 (**
  * @brief Pressure of the oil below which the warning activates.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_oil_pressure_warning = TelemetryString('oil.pressure.warning');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_oil_pressure_warning = SDKString('oil.pressure.warning');
 
 (**
  * @brief Temperature of the water above which the warning activates.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_water_temperature_warning = TelemetryString('water.temperature.warning');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_water_temperature_warning = SDKString('water.temperature.warning');
 
 (**
  * @brief Voltage of the battery below which the warning activates.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_battery_voltage_warning = TelemetryString('battery.voltage.warning');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_battery_voltage_warning = SDKString('battery.voltage.warning');
 
 (**
  * @brief Maximum rpm value.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_rpm_limit = TelemetryString('rpm.limit');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_rpm_limit = SDKString('rpm.limit');
 
 (**
  * @brief Number of forward gears on undamaged truck.
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_forward_gear_count = TelemetryString('gears.forward');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_forward_gear_count = SDKString('gears.forward');
 
 (**
  * @brief Number of reversee gears on undamaged truck.
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_reverse_gear_count = TelemetryString('gears.reverse');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_reverse_gear_count = SDKString('gears.reverse');
 
 (**
  * @brief Differential ratio of the truck.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_differential_ratio = TelemetryString('differential.ratio');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_differential_ratio = SDKString('differential.ratio');
 
 (**
  * @brief Number of steps in the retarder.
@@ -1564,21 +1563,21 @@ const
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_retarder_step_count = TelemetryString('retarder.steps');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_retarder_step_count = SDKString('retarder.steps');
 
 (**
  * @brief Forward transmission ratios.
  *
  * Type: indexed float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_forward_ratio = TelemetryString('forward.ratio');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_forward_ratio = SDKString('forward.ratio');
 
 (**
  * @brief Reverse transmission ratios.
  *
  * Type: indexed float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_reverse_ratio = TelemetryString('reverse.ratio');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_reverse_ratio = SDKString('reverse.ratio');
 
 (**
  * @brief Position of the cabin in the vehicle space.
@@ -1589,14 +1588,14 @@ const
  *
  * Type: fvector
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cabin_position = TelemetryString('cabin.position');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cabin_position = SDKString('cabin.position');
 
 (**
  * @brief Default position of the head in the cabin space.
  *
  * Type: fvector
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_head_position = TelemetryString('head.position');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_head_position = SDKString('head.position');
 
 (**
  * @brief Position of the trailer connection hook in vehicle
@@ -1604,70 +1603,70 @@ const
  *
  * Type: fvector
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_hook_position = TelemetryString('hook.position');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_hook_position = SDKString('hook.position');
 
 (**
  * @brief Number of wheels
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_count = TelemetryString('wheels.count');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_count = SDKString('wheels.count');
 
 (**
  * @brief Position of respective wheels in the vehicle space.
  *
  * Type: indexed fvector
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_position = TelemetryString('wheel.position');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_position = SDKString('wheel.position');
 
 (**
  * @brief Is the wheel steerable?
  *
  * Type: indexed bool
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_steerable = TelemetryString('wheel.steerable');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_steerable = SDKString('wheel.steerable');
 
 (**
  * @brief Is the wheel physicaly simulated?
  *
  * Type: indexed bool
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_simulated = TelemetryString('wheel.simulated');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_simulated = SDKString('wheel.simulated');
 
 (**
  * @brief Radius of the wheel
  *
  * Type: indexed float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_radius = TelemetryString('wheel.radius');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_radius = SDKString('wheel.radius');
 
 (**
  * @brief Is the wheel powered?
  *
  * Type: indexed bool
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_powered = TelemetryString('wheel.powered');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_powered = SDKString('wheel.powered');
 
 (**
  * @brief Is the wheel liftable?
  *
  * Type: indexed bool
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_liftable = TelemetryString('wheel.liftable');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_wheel_liftable = SDKString('wheel.liftable');
 
 (**
  * @brief Number of selectors (e.g. range/splitter toggles).
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_selector_count = TelemetryString('selector.count');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_selector_count = SDKString('selector.count');
 
 (**
  * @brief Gear selected when requirements for this h-shifter slot are meet.
  *
  * Type: indexed s32
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_slot_gear = TelemetryString('slot.gear');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_slot_gear = SDKString('slot.gear');
 
 (**
  * @brief Position of h-shifter handle.
@@ -1677,7 +1676,7 @@ const
  *
  * Type: indexed u32
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_slot_handle_position = TelemetryString('slot.handle.position');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_slot_handle_position = SDKString('slot.handle.position');
 
 (**
  * @brief Bitmask of required on/off state of selectors.
@@ -1686,7 +1685,7 @@ const
  *
  * Type: indexed u32
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_slot_selectors = TelemetryString('slot.selectors');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_slot_selectors = SDKString('slot.selectors');
 
 (**
  * @brief Type of the shifter.
@@ -1695,12 +1694,12 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_shifter_type = TelemetryString('shifter.type');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_shifter_type = SDKString('shifter.type');
 
-  SCS_SHIFTER_TYPE_arcade    = TelemetryString('arcade');
-  SCS_SHIFTER_TYPE_automatic = TelemetryString('automatic');
-  SCS_SHIFTER_TYPE_manual    = TelemetryString('manual');
-  SCS_SHIFTER_TYPE_hshifter  = TelemetryString('hshifter');
+  SCS_SHIFTER_TYPE_arcade    = SDKString('arcade');
+  SCS_SHIFTER_TYPE_automatic = SDKString('automatic');
+  SCS_SHIFTER_TYPE_manual    = SDKString('manual');
+  SCS_SHIFTER_TYPE_hshifter  = SDKString('hshifter');
 
  // Attributes
 
@@ -1711,7 +1710,7 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cargo_id = TelemetryString('cargo.id');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cargo_id = SDKString('cargo.id');
 
 (**
  * @brief Name of the cargo for display purposes.
@@ -1720,28 +1719,28 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cargo = TelemetryString('cargo');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cargo = SDKString('cargo');
 
 (**
  * @brief Mass of the cargo in kilograms.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cargo_mass = TelemetryString('cargo.mass');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cargo_mass = SDKString('cargo.mass');
 
 (**
  * @brief Mass of the single unit of the cargo in kilograms.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cargo_unit_mass = TelemetryString('cargo.unit.mass');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cargo_unit_mass = SDKString('cargo.unit.mass');
 
 (**
  * @brief How many units of the cargo the job consist of.
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cargo_unit_count = TelemetryString('cargo.unit.count');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_cargo_unit_count = SDKString('cargo.unit.count');
 
 
 (**
@@ -1751,7 +1750,7 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_destination_city_id = TelemetryString('destination.city.id');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_destination_city_id = SDKString('destination.city.id');
 
 (**
  * @brief Name of the destination city for display purposes.
@@ -1760,7 +1759,7 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_destination_city = TelemetryString('destination.city');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_destination_city = SDKString('destination.city');
 
 (**
  * @brief Id of the destination company for internal use by code.
@@ -1769,7 +1768,7 @@ const
  *
  * Type: string
  *(
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_destination_company_id = TelemetryString('destination.company.id');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_destination_company_id = SDKString('destination.company.id');
 
 (**
  * @brief Name of the destination company for display purposes.
@@ -1778,7 +1777,7 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_destination_company = TelemetryString('destination.company');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_destination_company = SDKString('destination.company');
 
 (**
  * @brief Id of the source city for internal use by code.
@@ -1787,7 +1786,7 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_source_city_id = TelemetryString('source.city.id');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_source_city_id = SDKString('source.city.id');
 
 (**
  * @brief Name of the source city for display purposes.
@@ -1796,7 +1795,7 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_source_city = TelemetryString('source.city');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_source_city = SDKString('source.city');
 
 (**
  * @brief Id of the source company for internal use by code.
@@ -1805,7 +1804,7 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_source_company_id = TelemetryString('source.company.id');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_source_company_id = SDKString('source.company.id');
 
 (**
  * @brief Name of the source company for display purposes.
@@ -1814,7 +1813,7 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_source_company = TelemetryString('source.company');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_source_company = SDKString('source.company');
 
 (**
  * @brief Reward in internal game-specific currency.
@@ -1824,7 +1823,7 @@ const
  *
  * Type: u64
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_income = TelemetryString('income');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_income = SDKString('income');
 
 (**
  * @brief Absolute in-game time of end of job delivery window.
@@ -1836,7 +1835,7 @@ const
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_delivery_time = TelemetryString('delivery.time');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_delivery_time = SDKString('delivery.time');
 
 (**
  * @brief Planned job distance in simulated kilometers.
@@ -1845,7 +1844,7 @@ const
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_planned_distance_km = TelemetryString('planned_distance.km');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_planned_distance_km = SDKString('planned_distance.km');
 
 (**
  * @brief Is cargo loaded on the trailer?
@@ -1854,7 +1853,7 @@ const
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_is_cargo_loaded = TelemetryString('cargo.loaded');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_is_cargo_loaded = SDKString('cargo.loaded');
 
 (**
  * @brief The job market this job is from.
@@ -1869,14 +1868,14 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_job_market = TelemetryString('job.market');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_job_market = SDKString('job.market');
 
 (**
  * @brief Flag indicating that the job is special transport job.
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_CONFIG_ATTRIBUTE_special_job = TelemetryString('is.special.job');
+  SCS_TELEMETRY_CONFIG_ATTRIBUTE_special_job = SDKString('is.special.job');
 
 {-------------------------------------------------------------------------------
   common/scssdk_telemetry_common_gameplay_events.pas
@@ -1889,7 +1888,7 @@ const
  * @li cancel_penalty
  *)
 const 
-  SCS_TELEMETRY_GAMEPLAY_EVENT_job_cancelled = TelemetryString('job.cancelled');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_job_cancelled = SDKString('job.cancelled');
 
 (**
  * @brief Event called when job is delivered.
@@ -1903,7 +1902,7 @@ const
  * @li autopark_used
  * @li autoload_used
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_job_delivered = TelemetryString('job.delivered');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_job_delivered = SDKString('job.delivered');
 
 (**
  * @brief Event called when player gets fined.
@@ -1912,7 +1911,7 @@ const
  * @li fine_offence
  * @li fine_amount
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_player_fined = TelemetryString('player.fined');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_player_fined = SDKString('player.fined');
 
 (**
  * @brief Event called when player pays for a tollgate.
@@ -1920,7 +1919,7 @@ const
  * Attributes:
  * @li pay_amount
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_player_tollgate_paid = TelemetryString('player.tollgate.paid');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_player_tollgate_paid = SDKString('player.tollgate.paid');
 
 (**
  * @brief Event called when player uses a ferry.
@@ -1932,7 +1931,7 @@ const
  * @li source_id
  * @li target_id
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_player_use_ferry = TelemetryString('player.use.ferry');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_player_use_ferry = SDKString('player.use.ferry');
 
 (**
  * @brief Event called when player uses a train.
@@ -1944,7 +1943,7 @@ const
  * @li source_id
  * @li target_id
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_player_use_train = TelemetryString('player.use.train');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_player_use_train = SDKString('player.use.train');
 
 // Attributes
 
@@ -1953,56 +1952,56 @@ const
  *
  * Type: s64
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_cancel_penalty = TelemetryString('cancel.penalty');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_cancel_penalty = SDKString('cancel.penalty');
 
 (**
  * @brief The job revenue in native game currency.
  *
  * Type: s64
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_revenue = TelemetryString('revenue');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_revenue = SDKString('revenue');
 
 (**
  * @brief How much XP player received for the job.
  *
  * Type: s32
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_earned_xp = TelemetryString('earned.xp');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_earned_xp = SDKString('earned.xp');
 
 (**
  * @brief Total cargo damage. (Range <0.0, 1.0>)
  *
  * Type: float
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_cargo_damage = TelemetryString('cargo.damage');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_cargo_damage = SDKString('cargo.damage');
 
 (**
  * @brief The real distance in km on the job.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_distance_km = TelemetryString('distance.km');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_distance_km = SDKString('distance.km');
 
 (**
  * @brief Total time spend on the job in game minutes.
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_delivery_time = TelemetryString('delivery.time');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_delivery_time = SDKString('delivery.time');
 
 (**
  * @brief Was auto parking used on this job?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_auto_park_used = TelemetryString('auto.park.used');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_auto_park_used = SDKString('auto.park.used');
 
 (**
  * @brief Was auto loading used on this job? (always @c true for non cargo market jobs)
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_auto_load_used = TelemetryString('auto.load.used');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_auto_load_used = SDKString('auto.load.used');
 
 (**
  * @brief Fine offence type.
@@ -2025,49 +2024,49 @@ const
  *
  * Type: string
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_fine_offence = TelemetryString('fine.offence');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_fine_offence = SDKString('fine.offence');
 
 (**
  * @brief Fine offence amount in native game currency.
  *
  * Type: s64
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_fine_amount = TelemetryString('fine.amount');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_fine_amount = SDKString('fine.amount');
 
 (**
  * @brief How much player was charged for this action (in native game currency)
  *
  * Type: s64
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_pay_amount = TelemetryString('pay.amount');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_pay_amount = SDKString('pay.amount');
 
 (**
  * @brief The name of the transportation source.
  *
  * Type: string
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_source_name = TelemetryString('source.name');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_source_name = SDKString('source.name');
 
 (**
  * @brief The name of the transportation target.
  *
  * Type: string
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_target_name = TelemetryString('target.name');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_target_name = SDKString('target.name');
 
 (**
  * @brief The id of the transportation source.
  *
  * Type: string
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_source_id = TelemetryString('source.id');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_source_id = SDKString('source.id');
 
 (**
  * @brief The id of the transportation target.
  *
  * Type: string
  *)
-  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_target_id = TelemetryString('target.id');
+  SCS_TELEMETRY_GAMEPLAY_EVENT_ATTRIBUTE_target_id = SDKString('target.id');
 
 {-------------------------------------------------------------------------------
   common/scssdk_telemetry_common_channels.pas
@@ -2084,7 +2083,7 @@ const
  * Type: float
  *)
 const
-  SCS_TELEMETRY_CHANNEL_local_scale = TelemetryString('local.scale');
+  SCS_TELEMETRY_CHANNEL_local_scale = SDKString('local.scale');
 
 (**
  * @brief Absolute in-game time.
@@ -2094,7 +2093,7 @@ const
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_CHANNEL_game_time = TelemetryString('game.time');
+  SCS_TELEMETRY_CHANNEL_game_time = SDKString('game.time');
 
 (**
  * @brief Offset from the game_time simulated in the local economy to the
@@ -2109,7 +2108,7 @@ const
  *
  * Type: s32
  *)
-  SCS_TELEMETRY_CHANNEL_multiplayer_time_offset = TelemetryString('multiplayer.time.offset');
+  SCS_TELEMETRY_CHANNEL_multiplayer_time_offset = SDKString('multiplayer.time.offset');
 
 (**
  * @brief Time until next rest stop.
@@ -2122,7 +2121,7 @@ const
  *
  * Type: s32
  *)
-  SCS_TELEMETRY_CHANNEL_next_rest_stop = TelemetryString('rest.stop');
+  SCS_TELEMETRY_CHANNEL_next_rest_stop = SDKString('rest.stop');
 
 {-------------------------------------------------------------------------------
   common/scssdk_telemetry_truck_common_channels.pas
@@ -2136,7 +2135,7 @@ const
  * Type: dplacement
  *)
 const
-  SCS_TELEMETRY_TRUCK_CHANNEL_world_placement = TelemetryString('truck.world.placement');
+  SCS_TELEMETRY_TRUCK_CHANNEL_world_placement = SDKString('truck.world.placement');
 
 (**
  * @brief Represents vehicle space linear velocity of the truck measured
@@ -2144,7 +2143,7 @@ const
  *
  * Type: fvector
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_local_linear_velocity = TelemetryString('truck.local.velocity.linear');
+  SCS_TELEMETRY_TRUCK_CHANNEL_local_linear_velocity = SDKString('truck.local.velocity.linear');
 
 (**
  * @brief Represents vehicle space angular velocity of the truck measured
@@ -2152,7 +2151,7 @@ const
  *
  * Type: fvector
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_local_angular_velocity = TelemetryString('truck.local.velocity.angular');
+  SCS_TELEMETRY_TRUCK_CHANNEL_local_angular_velocity = SDKString('truck.local.velocity.angular');
 
 (**
  * @brief Represents vehicle space linear acceleration of the truck measured
@@ -2160,7 +2159,7 @@ const
  *
  * Type: fvector
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_local_linear_acceleration = TelemetryString('truck.local.acceleration.linear');
+  SCS_TELEMETRY_TRUCK_CHANNEL_local_linear_acceleration = SDKString('truck.local.acceleration.linear');
 
  (**
  * @brief Represents vehicle space angular acceleration of the truck meassured
@@ -2168,7 +2167,7 @@ const
  *
  * Type: fvector
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_local_angular_acceleration = TelemetryString('truck.local.acceleration.angular');
+  SCS_TELEMETRY_TRUCK_CHANNEL_local_angular_acceleration = SDKString('truck.local.acceleration.angular');
 
 (**
  * @brief Represents a vehicle space position and orientation delta
@@ -2176,7 +2175,7 @@ const
  *
  * Type: fplacement
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_cabin_offset = TelemetryString('truck.cabin.offset');
+  SCS_TELEMETRY_TRUCK_CHANNEL_cabin_offset = SDKString('truck.cabin.offset');
 
 (**
  * @brief Represents cabin space angular velocity of the cabin measured
@@ -2184,7 +2183,7 @@ const
  *
  * Type: fvector
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_cabin_angular_velocity = TelemetryString('truck.cabin.velocity.angular');
+  SCS_TELEMETRY_TRUCK_CHANNEL_cabin_angular_velocity = SDKString('truck.cabin.velocity.angular');
 
  (**
  * @brief Represents cabin space angular acceleration of the cabin
@@ -2192,7 +2191,7 @@ const
  *
  * Type: fvector
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_cabin_angular_acceleration = TelemetryString('truck.cabin.acceleration.angular');
+  SCS_TELEMETRY_TRUCK_CHANNEL_cabin_angular_acceleration = SDKString('truck.cabin.acceleration.angular');
 
 (**
  * @brief Represents a cabin space position and orientation delta
@@ -2203,7 +2202,7 @@ const
  *
  * Type: fplacement
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_head_offset = TelemetryString('truck.head.offset');
+  SCS_TELEMETRY_TRUCK_CHANNEL_head_offset = SDKString('truck.head.offset');
 
 (**
  * @brief Speedometer speed in meters per second.
@@ -2212,7 +2211,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_speed = TelemetryString('truck.speed');
+  SCS_TELEMETRY_TRUCK_CHANNEL_speed = SDKString('truck.speed');
 
 // Powertrain related
 
@@ -2221,7 +2220,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_engine_rpm = TelemetryString('truck.engine.rpm');
+  SCS_TELEMETRY_TRUCK_CHANNEL_engine_rpm = SDKString('truck.engine.rpm');
 
 (**
  * @brief Gear currently selected in the engine.
@@ -2232,7 +2231,7 @@ const
  *
  * Type: s32
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_engine_gear = TelemetryString('truck.engine.gear');
+  SCS_TELEMETRY_TRUCK_CHANNEL_engine_gear = SDKString('truck.engine.gear');
 
 (**
  * @brief Gear currently displayed on dashboard.
@@ -2243,7 +2242,7 @@ const
  *
  * Type: s32
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_displayed_gear = TelemetryString('truck.displayed.gear');
+  SCS_TELEMETRY_TRUCK_CHANNEL_displayed_gear = SDKString('truck.displayed.gear');
 
 // Driving
 
@@ -2257,7 +2256,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_input_steering = TelemetryString('truck.input.steering');
+  SCS_TELEMETRY_TRUCK_CHANNEL_input_steering = SDKString('truck.input.steering');
 
 (**
  * @brief Throttle received from input <0;1>
@@ -2267,7 +2266,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_input_throttle = TelemetryString('truck.input.throttle');
+  SCS_TELEMETRY_TRUCK_CHANNEL_input_throttle = SDKString('truck.input.throttle');
 
 (**
  * @brief Brake received from input <0;1>
@@ -2277,7 +2276,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_input_brake = TelemetryString('truck.input.brake');
+  SCS_TELEMETRY_TRUCK_CHANNEL_input_brake = SDKString('truck.input.brake');
 
 (**
  * @brief Clutch received from input <0;1>
@@ -2287,7 +2286,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_input_clutch = TelemetryString('truck.input.clutch');
+  SCS_TELEMETRY_TRUCK_CHANNEL_input_clutch = SDKString('truck.input.clutch');
 
 (**
  * @brief Steering as used by the simulation <-1;1>
@@ -2299,7 +2298,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_effective_steering = TelemetryString('truck.effective.steering');
+  SCS_TELEMETRY_TRUCK_CHANNEL_effective_steering = SDKString('truck.effective.steering');
 
 (**
  * @brief Throttle pedal input as used by the simulation <0;1>
@@ -2309,7 +2308,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_effective_throttle = TelemetryString('truck.effective.throttle');
+  SCS_TELEMETRY_TRUCK_CHANNEL_effective_throttle = SDKString('truck.effective.throttle');
 
 (**
  * @brief Brake pedal input as used by the simulation <0;1>
@@ -2319,7 +2318,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_effective_brake = TelemetryString('truck.effective.brake');
+  SCS_TELEMETRY_TRUCK_CHANNEL_effective_brake = SDKString('truck.effective.brake');
 
 (**
  * @brief Clutch pedal input as used by the simulation <0;1>
@@ -2329,7 +2328,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_effective_clutch = TelemetryString('truck.effective.clutch');
+  SCS_TELEMETRY_TRUCK_CHANNEL_effective_clutch = SDKString('truck.effective.clutch');
 
 (**
  * @brief Speed selected for the cruise control in m/s
@@ -2338,7 +2337,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_cruise_control = TelemetryString('truck.cruise_control');
+  SCS_TELEMETRY_TRUCK_CHANNEL_cruise_control = SDKString('truck.cruise_control');
 
 // Gearbox related
 
@@ -2349,7 +2348,7 @@ const
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_hshifter_slot = TelemetryString('truck.hshifter.slot');
+  SCS_TELEMETRY_TRUCK_CHANNEL_hshifter_slot = SDKString('truck.hshifter.slot');
 
 (**
  * @brief Enabled state of range/splitter selector toggles.
@@ -2359,7 +2358,7 @@ const
  *
  * Type: indexed bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_hshifter_selector = TelemetryString('truck.hshifter.select');
+  SCS_TELEMETRY_TRUCK_CHANNEL_hshifter_selector = SDKString('truck.hshifter.select');
 
  // Brakes.
 
@@ -2368,14 +2367,14 @@ const
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_parking_brake = TelemetryString('truck.brake.parking');
+  SCS_TELEMETRY_TRUCK_CHANNEL_parking_brake = SDKString('truck.brake.parking');
 
 (**
  * @brief Is the engine brake enabled?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_motor_brake = TelemetryString('truck.brake.motor');
+  SCS_TELEMETRY_TRUCK_CHANNEL_motor_brake = SDKString('truck.brake.motor');
 
 (**
  * @brief Current level of the retarder.
@@ -2385,28 +2384,28 @@ const
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_retarder_level = TelemetryString('truck.brake.retarder');
+  SCS_TELEMETRY_TRUCK_CHANNEL_retarder_level = SDKString('truck.brake.retarder');
 
 (**
  * @brief Pressure in the brake air tank in psi
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_brake_air_pressure = TelemetryString('truck.brake.air.pressure');
+  SCS_TELEMETRY_TRUCK_CHANNEL_brake_air_pressure = SDKString('truck.brake.air.pressure');
 
 (**
  * @brief Is the air pressure warning active?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_brake_air_pressure_warning = TelemetryString('truck.brake.air.pressure.warning');
+  SCS_TELEMETRY_TRUCK_CHANNEL_brake_air_pressure_warning = SDKString('truck.brake.air.pressure.warning');
 
 (**
  * @brief Are the emergency brakes active as result of low air pressure?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_brake_air_pressure_emergency = TelemetryString('truck.brake.air.pressure.emergency');
+  SCS_TELEMETRY_TRUCK_CHANNEL_brake_air_pressure_emergency = SDKString('truck.brake.air.pressure.emergency');
 
 (**
  * @brief Temperature of the brakes in degrees celsius.
@@ -2415,7 +2414,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_brake_temperature = TelemetryString('truck.brake.temperature');
+  SCS_TELEMETRY_TRUCK_CHANNEL_brake_temperature = SDKString('truck.brake.temperature');
 
 // Various "consumables"
 
@@ -2424,49 +2423,49 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_fuel = TelemetryString('truck.fuel.amount');
+  SCS_TELEMETRY_TRUCK_CHANNEL_fuel = SDKString('truck.fuel.amount');
 
 (**
  * @brief Is the low fuel warning active?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_fuel_warning = TelemetryString('truck.fuel.warning');
+  SCS_TELEMETRY_TRUCK_CHANNEL_fuel_warning = SDKString('truck.fuel.warning');
 
 (**
  * @brief Average consumption of the fuel in liters/km
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_fuel_average_consumption = TelemetryString('truck.fuel.consumption.average');
+  SCS_TELEMETRY_TRUCK_CHANNEL_fuel_average_consumption = SDKString('truck.fuel.consumption.average');
 
 (**
  * @brief Estimated range of truck with current amount of fuel in km
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_fuel_range = TelemetryString('truck.fuel.range');
+  SCS_TELEMETRY_TRUCK_CHANNEL_fuel_range = SDKString('truck.fuel.range');
 
 (**
  * @brief Amount of AdBlue in liters
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_adblue = TelemetryString('truck.adblue');
+  SCS_TELEMETRY_TRUCK_CHANNEL_adblue = SDKString('truck.adblue');
 
 (**
  * @brief Is the low adblue warning active?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_adblue_warning = TelemetryString('truck.adblue.warning');
+  SCS_TELEMETRY_TRUCK_CHANNEL_adblue_warning = SDKString('truck.adblue.warning');
 
 (**
  * @brief Average consumption of the adblue in liters/km
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_adblue_average_consumption = TelemetryString('truck.adblue.consumption.average');
+  SCS_TELEMETRY_TRUCK_CHANNEL_adblue_average_consumption = SDKString('truck.adblue.consumption.average');
 
 // Oil
 
@@ -2475,21 +2474,21 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_oil_pressure = TelemetryString('truck.oil.pressure');
+  SCS_TELEMETRY_TRUCK_CHANNEL_oil_pressure = SDKString('truck.oil.pressure');
 
 (**
  * @brief Is the oil pressure warning active?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_oil_pressure_warning = TelemetryString('truck.oil.pressure.warning');
+  SCS_TELEMETRY_TRUCK_CHANNEL_oil_pressure_warning = SDKString('truck.oil.pressure.warning');
 
 (**
  * @brief Temperature of the oil in degrees celsius.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_oil_temperature = TelemetryString('truck.oil.temperature');
+  SCS_TELEMETRY_TRUCK_CHANNEL_oil_temperature = SDKString('truck.oil.temperature');
 
 // Temperature in various systems.
 
@@ -2498,14 +2497,14 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_water_temperature = TelemetryString('truck.water.temperature');
+  SCS_TELEMETRY_TRUCK_CHANNEL_water_temperature = SDKString('truck.water.temperature');
 
 (**
  * @brief Is the water temperature warning active?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_water_temperature_warning = TelemetryString('truck.water.temperature.warning');
+  SCS_TELEMETRY_TRUCK_CHANNEL_water_temperature_warning = SDKString('truck.water.temperature.warning');
 
 // Battery
 
@@ -2514,14 +2513,14 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_battery_voltage = TelemetryString('truck.battery.voltage');
+  SCS_TELEMETRY_TRUCK_CHANNEL_battery_voltage = SDKString('truck.battery.voltage');
 
 (**
  * @brief Is the battery voltage/not charging warning active?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_battery_voltage_warning = TelemetryString('truck.battery.voltage.warning');
+  SCS_TELEMETRY_TRUCK_CHANNEL_battery_voltage_warning = SDKString('truck.battery.voltage.warning');
 
 // Enabled state of various elements.
 
@@ -2530,14 +2529,14 @@ const
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_electric_enabled = TelemetryString('truck.electric.enabled');
+  SCS_TELEMETRY_TRUCK_CHANNEL_electric_enabled = SDKString('truck.electric.enabled');
 
 (**
  * @brief Is the engine enabled?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_engine_enabled = TelemetryString('truck.engine.enabled');
+  SCS_TELEMETRY_TRUCK_CHANNEL_engine_enabled = SDKString('truck.engine.enabled');
 
 (**
  * @brief Is the left blinker enabled?
@@ -2549,7 +2548,7 @@ const
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_lblinker = TelemetryString('truck.lblinker');
+  SCS_TELEMETRY_TRUCK_CHANNEL_lblinker = SDKString('truck.lblinker');
 
 (**
  * @brief Is the right blinker enabled?
@@ -2561,7 +2560,7 @@ const
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_rblinker = TelemetryString('truck.rblinker');
+  SCS_TELEMETRY_TRUCK_CHANNEL_rblinker = SDKString('truck.rblinker');
 
 (**
  * @brief Are the hazard warning light enabled?
@@ -2572,42 +2571,42 @@ const
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_hazard_warning = TelemetryString('truck.hazard.warning');
+  SCS_TELEMETRY_TRUCK_CHANNEL_hazard_warning = SDKString('truck.hazard.warning');
 
 (**
  * @brief Is the light in the left blinker currently on?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_light_lblinker = TelemetryString('truck.light.lblinker');
+  SCS_TELEMETRY_TRUCK_CHANNEL_light_lblinker = SDKString('truck.light.lblinker');
 
 (**
  * @brief Is the light in the right blinker currently on?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_light_rblinker = TelemetryString('truck.light.rblinker');
+  SCS_TELEMETRY_TRUCK_CHANNEL_light_rblinker = SDKString('truck.light.rblinker');
 
 (**
  * @brief Are the parking lights enabled?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_light_parking = TelemetryString('truck.light.parking');
+  SCS_TELEMETRY_TRUCK_CHANNEL_light_parking = SDKString('truck.light.parking');
 
 (**
  * @brief Are the low beam lights enabled?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_light_low_beam = TelemetryString('truck.light.beam.low');
+  SCS_TELEMETRY_TRUCK_CHANNEL_light_low_beam = SDKString('truck.light.beam.low');
 
 (**
  * @brief Are the high beam lights enabled?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_light_high_beam = TelemetryString('truck.light.beam.high');
+  SCS_TELEMETRY_TRUCK_CHANNEL_light_high_beam = SDKString('truck.light.beam.high');
 
 (**
  * @brief Are the auxiliary front lights active?
@@ -2618,7 +2617,7 @@ const
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_light_aux_front = TelemetryString('truck.light.aux.front');
+  SCS_TELEMETRY_TRUCK_CHANNEL_light_aux_front = SDKString('truck.light.aux.front');
 
 (**
  * @brief Are the auxiliary roof lights active?
@@ -2629,77 +2628,77 @@ const
  *
  * Type: u32
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_light_aux_roof = TelemetryString('truck.light.aux.roof');
+  SCS_TELEMETRY_TRUCK_CHANNEL_light_aux_roof = SDKString('truck.light.aux.roof');
 
 (**
  * @brief Are the beacon lights enabled?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_light_beacon = TelemetryString('truck.light.beacon');
+  SCS_TELEMETRY_TRUCK_CHANNEL_light_beacon = SDKString('truck.light.beacon');
 
 (**
  * @brief Is the brake light active?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_light_brake = TelemetryString('truck.light.brake');
+  SCS_TELEMETRY_TRUCK_CHANNEL_light_brake = SDKString('truck.light.brake');
 
 (**
  * @brief Is the reverse light active?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_light_reverse = TelemetryString('truck.light.reverse');
+  SCS_TELEMETRY_TRUCK_CHANNEL_light_reverse = SDKString('truck.light.reverse');
 
 (**
  * @brief Are the wipers enabled?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wipers = TelemetryString('truck.wipers');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wipers = SDKString('truck.wipers');
 
 (**
  * @brief Intensity of the dashboard backlight as factor <0;1>
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_dashboard_backlight = TelemetryString('truck.dashboard.backlight');
+  SCS_TELEMETRY_TRUCK_CHANNEL_dashboard_backlight = SDKString('truck.dashboard.backlight');
 
 (**
  * @brief Is the differential lock enabled?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_differential_lock = TelemetryString('truck.differential_lock');
+  SCS_TELEMETRY_TRUCK_CHANNEL_differential_lock = SDKString('truck.differential_lock');
 
 (**
  * @brief Is the lift axle control set to lifted state?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_lift_axle = TelemetryString('truck.lift_axle');
+  SCS_TELEMETRY_TRUCK_CHANNEL_lift_axle = SDKString('truck.lift_axle');
 
 (**
  * @brief Is the lift axle indicator lit?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_lift_axle_indicator = TelemetryString('truck.lift_axle.indicator');
+  SCS_TELEMETRY_TRUCK_CHANNEL_lift_axle_indicator = SDKString('truck.lift_axle.indicator');
 
 (**
  * @brief Is the trailer lift axle control set to lifted state?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_trailer_lift_axle = TelemetryString('truck.trailer.lift_axle');
+  SCS_TELEMETRY_TRUCK_CHANNEL_trailer_lift_axle = SDKString('truck.trailer.lift_axle');
 
 (**
  * @brief Is the trailer lift axle indicator lit?
  *
  * Type: bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_trailer_lift_axle_indicator = TelemetryString('truck.trailer.lift_axle.indicator');
+  SCS_TELEMETRY_TRUCK_CHANNEL_trailer_lift_axle_indicator = SDKString('truck.trailer.lift_axle.indicator');
 
 // Wear info.
 
@@ -2708,42 +2707,42 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wear_engine = TelemetryString('truck.wear.engine');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wear_engine = SDKString('truck.wear.engine');
 
 (**
  * @brief Wear of the transmission accessory as <0;1>
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wear_transmission = TelemetryString('truck.wear.transmission');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wear_transmission = SDKString('truck.wear.transmission');
 
 (**
  * @brief Wear of the cabin accessory as <0;1>
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wear_cabin = TelemetryString('truck.wear.cabin');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wear_cabin = SDKString('truck.wear.cabin');
 
 (**
  * @brief Wear of the chassis accessory as <0;1>
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wear_chassis = TelemetryString('truck.wear.chassis');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wear_chassis = SDKString('truck.wear.chassis');
 
 (**
  * @brief Average wear across the wheel accessories as <0;1>
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wear_wheels = TelemetryString('truck.wear.wheels');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wear_wheels = SDKString('truck.wear.wheels');
 
 (**
  * @brief The value of the odometer in km.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_odometer = TelemetryString('truck.odometer');
+  SCS_TELEMETRY_TRUCK_CHANNEL_odometer = SDKString('truck.odometer');
 
 (**
  * @brief The value of truck's navigation distance (in meters).
@@ -2752,7 +2751,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_navigation_distance = TelemetryString('truck.navigation.distance');
+  SCS_TELEMETRY_TRUCK_CHANNEL_navigation_distance = SDKString('truck.navigation.distance');
 
 (**
  * @brief The value of truck's navigation eta (in second).
@@ -2761,7 +2760,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_navigation_time = TelemetryString('truck.navigation.time');
+  SCS_TELEMETRY_TRUCK_CHANNEL_navigation_time = SDKString('truck.navigation.time');
 
 (**
  * @brief The value of truck's navigation speed limit (in m/s).
@@ -2771,7 +2770,7 @@ const
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_navigation_speed_limit = TelemetryString('truck.navigation.speed.limit');
+  SCS_TELEMETRY_TRUCK_CHANNEL_navigation_speed_limit = SDKString('truck.navigation.speed.limit');
 
 // Wheels.
 
@@ -2781,14 +2780,14 @@ const
  *
  * Type: indexed float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_susp_deflection = TelemetryString('truck.wheel.suspension.deflection');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_susp_deflection = SDKString('truck.wheel.suspension.deflection');
 
 (**
  * @brief Is the wheel in contact with ground?
  *
  * Type: indexed bool
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_on_ground = TelemetryString('truck.wheel.on_ground');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_on_ground = SDKString('truck.wheel.on_ground');
 
 (**
  * @brief Substance below the whell.
@@ -2797,7 +2796,7 @@ const
  *
  * Type: indexed u32
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_substance = TelemetryString('truck.wheel.substance');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_substance = SDKString('truck.wheel.substance');
 
 (**
  * @brief Angular velocity of the wheel in rotations per
@@ -2807,7 +2806,7 @@ const
  *
  * Type: indexed float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_velocity = TelemetryString('truck.wheel.angular_velocity');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_velocity = SDKString('truck.wheel.angular_velocity');
 
 (**
  * @brief Steering rotation of the wheel in rotations.
@@ -2820,7 +2819,7 @@ const
  *
  * Type: indexed float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_steering = TelemetryString('truck.wheel.steering');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_steering = SDKString('truck.wheel.steering');
 
 (**
  * @brief Rolling rotation of the wheel in rotations.
@@ -2830,7 +2829,7 @@ const
  *
  * Type: indexed float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_rotation = TelemetryString('truck.wheel.rotation');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_rotation = SDKString('truck.wheel.rotation');
 
 (**
  * @brief Lift state of the wheel <0;1>
@@ -2845,7 +2844,7 @@ const
  *
  * Type: indexed float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_lift = TelemetryString('truck.wheel.lift');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_lift = SDKString('truck.wheel.lift');
 
 (**
  * @brief Vertical displacement of the wheel axle
@@ -2858,7 +2857,7 @@ const
  *
  * Type: indexed float
  *)
-  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_lift_offset = TelemetryString('truck.wheel.lift.offset');
+  SCS_TELEMETRY_TRUCK_CHANNEL_wheel_lift_offset = SDKString('truck.wheel.lift.offset');
 
 {-------------------------------------------------------------------------------
   common/scssdk_telemetry_trailer_common_channels.pas
@@ -2886,14 +2885,14 @@ const
  * Type: bool
  *)
 const
-  SCS_TELEMETRY_TRAILER_CHANNEL_connected = TelemetryString('trailer.connected');
+  SCS_TELEMETRY_TRAILER_CHANNEL_connected = SDKString('trailer.connected');
 
 (**
  * @brief How much is the cargo damaged that is loaded to this trailer in <0.0, 1.0> range.
  *
  * Type: float
  *)
-  SCS_TELEMETRY_TRAILER_CHANNEL_cargo_damage = TelemetryString('trailer.cargo.damage');
+  SCS_TELEMETRY_TRAILER_CHANNEL_cargo_damage = SDKString('trailer.cargo.damage');
 
 (**
  * @name Channels similar to the truck ones
@@ -2902,28 +2901,28 @@ const
  * corresponding truck channels
  *)
 //@{
-  SCS_TELEMETRY_TRAILER_CHANNEL_world_placement             = TelemetryString('trailer.world.placement');
-  SCS_TELEMETRY_TRAILER_CHANNEL_local_linear_velocity       = TelemetryString('trailer.velocity.linear');
-  SCS_TELEMETRY_TRAILER_CHANNEL_local_angular_velocity      = TelemetryString('trailer.velocity.angular');
-  SCS_TELEMETRY_TRAILER_CHANNEL_local_linear_acceleration   = TelemetryString('trailer.acceleration.linear');
-  SCS_TELEMETRY_TRAILER_CHANNEL_local_angular_acceleration  = TelemetryString('trailer.acceleration.angular');
+  SCS_TELEMETRY_TRAILER_CHANNEL_world_placement             = SDKString('trailer.world.placement');
+  SCS_TELEMETRY_TRAILER_CHANNEL_local_linear_velocity       = SDKString('trailer.velocity.linear');
+  SCS_TELEMETRY_TRAILER_CHANNEL_local_angular_velocity      = SDKString('trailer.velocity.angular');
+  SCS_TELEMETRY_TRAILER_CHANNEL_local_linear_acceleration   = SDKString('trailer.acceleration.linear');
+  SCS_TELEMETRY_TRAILER_CHANNEL_local_angular_acceleration  = SDKString('trailer.acceleration.angular');
 
 // Damage.
 
-  SCS_TELEMETRY_TRAILER_CHANNEL_wear_body    = TelemetryString('trailer.wear.body');
-  SCS_TELEMETRY_TRAILER_CHANNEL_wear_chassis = TelemetryString('trailer.wear.chassis');
-  SCS_TELEMETRY_TRAILER_CHANNEL_wear_wheels  = TelemetryString('trailer.wear.wheels');
+  SCS_TELEMETRY_TRAILER_CHANNEL_wear_body    = SDKString('trailer.wear.body');
+  SCS_TELEMETRY_TRAILER_CHANNEL_wear_chassis = SDKString('trailer.wear.chassis');
+  SCS_TELEMETRY_TRAILER_CHANNEL_wear_wheels  = SDKString('trailer.wear.wheels');
 
 // Wheels.
 
-  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_susp_deflection = TelemetryString('trailer.wheel.suspension.deflection');
-  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_on_ground       = TelemetryString('trailer.wheel.on_ground');
-  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_substance       = TelemetryString('trailer.wheel.substance');
-  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_velocity        = TelemetryString('trailer.wheel.angular_velocity');
-  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_steering        = TelemetryString('trailer.wheel.steering');
-  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_rotation        = TelemetryString('trailer.wheel.rotation');
-  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_lift            = TelemetryString('trailer.wheel.lift');
-  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_lift_offset     = TelemetryString('trailer.wheel.lift.offset');
+  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_susp_deflection = SDKString('trailer.wheel.suspension.deflection');
+  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_on_ground       = SDKString('trailer.wheel.on_ground');
+  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_substance       = SDKString('trailer.wheel.substance');
+  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_velocity        = SDKString('trailer.wheel.angular_velocity');
+  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_steering        = SDKString('trailer.wheel.steering');
+  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_rotation        = SDKString('trailer.wheel.rotation');
+  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_lift            = SDKString('trailer.wheel.lift');
+  SCS_TELEMETRY_TRAILER_CHANNEL_wheel_lift_offset     = SDKString('trailer.wheel.lift.offset');
 //@}
 
 {-------------------------------------------------------------------------------
@@ -2936,7 +2935,7 @@ const
  * Type: float
  *)
 const
-  SCS_TELEMETRY_JOB_CHANNEL_cargo_damage = TelemetryString('job.cargo.damage');
+  SCS_TELEMETRY_JOB_CHANNEL_cargo_damage = SDKString('job.cargo.damage');
 
 {-------------------------------------------------------------------------------
   eurotrucks2/scssdk_telemetry_eut2.pas
@@ -3054,7 +3053,7 @@ const
  * @brief Value used in the scs_sdk_init_params_t::game_id to identify this game.
  *)
 const
-  SCS_GAME_ID_EUT2 = TelemetryString('eut2');
+  SCS_GAME_ID_EUT2 = SDKString('eut2');
 
 {-------------------------------------------------------------------------------
   amtrucks/scssdk_telemetry_ats.pas
@@ -3143,7 +3142,7 @@ const
  * @brief Value used in the scs_sdk_init_params_t::game_id to identify this game.
  *)
 const
-  SCS_GAME_ID_ATS = TelemetryString('ats');
+  SCS_GAME_ID_ATS = SDKString('ats');
 
 implementation
 
@@ -3198,14 +3197,14 @@ end;
 
 //==============================================================================
 
-Function APIString(const Str: TelemetryString): scs_string_t;
+Function APIString(const Str: SDKString): scs_string_t;
 begin
 Result := scs_string_t(PUTF8Char(Str));
 end;
 
 //------------------------------------------------------------------------------
 
-Function APIStringToTelemetryString(const Str: scs_string_t): TelemetryString;
+Function APIStringToSDKString(const Str: scs_string_t): SDKString;
 begin
 If Assigned(Str) then
   begin
@@ -3217,7 +3216,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-Function TelemetryStringToAPIString(const Str: TelemetryString): scs_string_t;
+Function SDKStringToAPIString(const Str: SDKString): scs_string_t;
 begin
 If Length(Str) > 0 then
   Result := scs_string_t(StrNew(PAnsiChar(Str)))
@@ -3238,14 +3237,14 @@ end;
 
 //------------------------------------------------------------------------------
 
-Function TelemetryStringDecode(const Str: TelemetryString): String;
+Function SDKStringDecode(const Str: SDKString): String;
 begin
 Result := StrRect.UTF8ToStr(Str);
 end;
 
 //------------------------------------------------------------------------------
 
-Function TelemetryStringEncode(const Str: String): TelemetryString;
+Function SDKStringEncode(const Str: String): SDKString;
 begin
 Result := StrRect.StrToUTF8(Str);
 end;
