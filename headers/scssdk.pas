@@ -268,8 +268,13 @@ Function SDKStringEncode(const Str: String): SDKString;{$IFDEF CanInline} inline
 
 implementation
 
+{$UNDEF ASTRS}
 uses
-  SysUtils;
+  SysUtils
+{$IF not Defined(FPC) and (CompilerVersion >= 20)}(* Delphi2009+ *)
+  {$DEFINE ASTRS}
+  , AnsiStrings
+{$IFEND};
   
 (*<implementation>*)
 
@@ -328,7 +333,7 @@ Function APIStringToSDKString(const Str: scs_string_t): SDKString;
 begin
 If Assigned(Str) then
   begin
-    SetLength(Result,StrLen(PAnsiChar(Str)));
+    SetLength(Result,{$IF Declared(AnsiStrings)}AnsiStrings.{$IFEND}StrLen(PAnsiChar(Str)));
     Move(Str^,PUTF8Char(Result)^,Length(Result) * SizeOf(UTF8Char));
   end
 else Result := '';
@@ -339,7 +344,7 @@ end;
 Function SDKStringToAPIString(const Str: SDKString): scs_string_t;
 begin
 If Length(Str) > 0 then
-  Result := scs_string_t(StrNew(PAnsiChar(Str)))
+  Result := scs_string_t({$IF Declared(AnsiStrings)}AnsiStrings.{$IFEND}StrNew(PAnsiChar(Str)))
 else
   Result := nil;
 end;
@@ -350,7 +355,7 @@ procedure APIStringFree(var Str: scs_string_t);
 begin
 If Assigned(Str) then
   begin
-    StrDispose(PAnsiChar(Str));
+    {$IF Declared(AnsiStrings)}AnsiStrings.{$IFEND}StrDispose(PAnsiChar(Str));
     Str := nil;
   end;
 end;

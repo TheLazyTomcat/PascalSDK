@@ -7,7 +7,7 @@
 -------------------------------------------------------------------------------}
 {===============================================================================
 
-  Pascal SCS SDK
+  PascalSDK
 
     A translation of SCS Software's SDK (SCS SDK) for data exchange and
     communication between a running game and a loaded dynamic library into
@@ -31,7 +31,7 @@
   Changelog:
     For detailed changelog and history please refer to this git repository:
 
-      github.com/TheLazyTomcat/Pascal_SCS_SDK
+      github.com/TheLazyTomcat/PascalSDK
 
   Dependencies:
     AuxTypes - github.com/TheLazyTomcat/Lib.AuxTypes
@@ -3146,8 +3146,13 @@ const
 
 implementation
 
+{$UNDEF ASTRS}
 uses
-  SysUtils; 
+  SysUtils
+{$IF not Defined(FPC) and (CompilerVersion >= 20)}(* Delphi2009+ *)
+  {$DEFINE ASTRS}
+  , AnsiStrings
+{$IFEND};
 
 {-------------------------------------------------------------------------------
   scssdk.pas
@@ -3208,7 +3213,7 @@ Function APIStringToSDKString(const Str: scs_string_t): SDKString;
 begin
 If Assigned(Str) then
   begin
-    SetLength(Result,StrLen(PAnsiChar(Str)));
+    SetLength(Result,{$IF Declared(AnsiStrings)}AnsiStrings.{$IFEND}StrLen(PAnsiChar(Str)));
     Move(Str^,PUTF8Char(Result)^,Length(Result) * SizeOf(UTF8Char));
   end
 else Result := '';
@@ -3219,7 +3224,7 @@ end;
 Function SDKStringToAPIString(const Str: SDKString): scs_string_t;
 begin
 If Length(Str) > 0 then
-  Result := scs_string_t(StrNew(PAnsiChar(Str)))
+  Result := scs_string_t({$IF Declared(AnsiStrings)}AnsiStrings.{$IFEND}StrNew(PAnsiChar(Str)))
 else
   Result := nil;
 end;
@@ -3230,7 +3235,7 @@ procedure APIStringFree(var Str: scs_string_t);
 begin
 If Assigned(Str) then
   begin
-    StrDispose(PAnsiChar(Str));
+    {$IF Declared(AnsiStrings)}AnsiStrings.{$IFEND}StrDispose(PAnsiChar(Str));
     Str := nil;
   end;
 end;
