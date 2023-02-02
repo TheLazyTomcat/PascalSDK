@@ -1,24 +1,27 @@
 ================================================================================
-                                    PascalSDK                                                                     
+
+                                    PascalSDK
+
+                       Translation of SCS SDK into Pascal
+
 ================================================================================
 
 Description
 ------------------------------
 The SCS SDK, as provided by the SCS Software company, is a collection of APIs
 designed to allow data exchange and communication between a running game and
-a dynamic library loaded by this game. This dynamic library can use the APIs to
-provide additional functionality to the game, provide extensive logging, and
+a dynamic library loaded by this game. This dynamic library can use these APIs
+to provide additional functionality to the game, provide extensive logging, and
 more. The APIs are defined in a set of several C header files (eg. "scssdk.h"),
 which are declaring number of constants, types and also a flat procedural
 interface. Currently (february 2023), this mechanism is supported by Euro Truck
 Simulator 2 and American Truck Simulator.
 
-PascalSDK project aims to provide a pascal translation of the entire SDK for 
-use in Delphi (version 7 or never) and Free Pascal Compiler (FPC version 2.6.4 
-or never) - possibly running under Lazarus IDE.                        
+PascalSDK project provides a pascal translation of the entire SDK for use in
+Delphi (version 7 or never) and Free Pascal Compiler (FPC version 2.6.4 or
+never) - possibly running under Lazarus IDE.
 
 Current version of PascalSDK (1.0) is based on SCS SDK version 1.14.
-
 
 
 
@@ -26,7 +29,7 @@ Important disclaimer
 ------------------------------
 The entire development of this project was done "in the blind" - that is, with
 absolutely no access to internet or other information channels and with no
-access to instalations of affected games (ETS2, ATS).
+access to instalations of relevant games (ETS2, ATS).
 This means, among others, that the translated headers were not actively tested
 beyond the fact that they can be compiled.
 
@@ -36,36 +39,30 @@ are part of the original SDK. They may be added later, if situation allows it.
 
 
 
-Parts of the project
+Technical details
 ------------------------------
-At this moment, there are two parts of this project:
+The translation is provided in two main forms. First is a one-to-one
+translation of the original headers, where each "*.h" file is translated into
+a corresponding "*.pas" file. These files are located in folder called
+"headers" within the project root.
 
-  First is a one-to-one translation of the original headers, where each "*.h"
-  file is translated into a corresponding "*.pas" file. These files are located
-  in folder called "headers" within the project root.
+As there are no true header files in pascal, it is not common to do agressive
+separation into individual files (like in the first form), but rather to place
+everything into one unit, if feasible, and use only this one in uses clause.
+The second form is this combination of all translated headers into one pascal
+unit, and is stored in file "headers_condensed/PascalSDK.pas".
 
-  Second part is a condensed form of all the translated headers, it completely
-  resides in the file "headers_condensed/PascalSDK.pas".
-  As there are no true header files in pascal, it is not common to do agressive
-  separation into individual files, but rather to place everything into one
-  unit, if feasible, and use this one in uses clause. The "PAscalSDK.pas" is 
-  such a unit.
-
-Whatever part you decide to use is only up to you, but using the condensed unit
+Whatever form you decide to use is only up to you, but using the condensed unit
 is recommended.
 
-The last thing, though not direct part of this project, is a program that is
-used to automatically condense the translated headers.
-The program and a few other supporting files are stored in folder "condenser".
-This folder is not present in "master" branch of the project, but is maintained
-in a branch called "condenser".
+Program used to automatically condense the translated headers with a few other
+supporting files is stored in folder "condenser" - note that this folder is not
+present in "master" branch of the project, but is maintained in a branch called
+"condenser".
 Full source code of the mentioned program can be found in the following
 repository:
 
   https://github.com/TheLazyTomcat/PascalSDK_Headers_Condenser
-
-Note that the "master" branch of that repository does not contain any binaries,
-they can be found in a branch "bin".
 
 
 
@@ -95,14 +92,13 @@ List of folders with description of their content:
 
   ./headers_original
 
-    Original sources of the SCS SDK (zip archives).   
+    Original sources of the SCS SDK (zip archives).
 
 
 
 Repositories
 ----------------------------------------
-You can get actual copy and source code of this project on the following git
-repository:
+You can get actual copy of this project on the following git repository:
 
   https://github.com/TheLazyTomcat/PascalSDK
 
@@ -125,7 +121,7 @@ Authors, contacts, links
 ----------------------------------------
 František Milt, frantisek.milt@gmail.com
 
-If you find this project useful, please consider making a small donation using 
+If you find this project useful, please consider making a small donation using
 the following link:
 
   https://www.paypal.me/FMilt

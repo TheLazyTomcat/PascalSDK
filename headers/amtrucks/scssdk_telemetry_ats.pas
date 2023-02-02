@@ -13,9 +13,9 @@
     communication between a running game and a loaded dynamic library into
     the Pascal programming language.
 
-  Version 1.0 (2023-02-01)
+  Version 1.0 (2023-02-02)
 
-  Last changed 2023-02-01
+  Last changed 2023-02-02
 
   ©2023 František Milt
 
