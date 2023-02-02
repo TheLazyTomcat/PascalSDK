@@ -1,0 +1,24 @@
+<description>
+<unit_name> 
+<defines>
+
+interface
+
+uses
+  AuxTypes, StrRect; 
+<interface>
+
+implementation
+
+uses
+  SysUtils
+{$IF not Defined(FPC) and (CompilerVersion >= 20)}(* Delphi2009+ *)
+  , AnsiStrings
+{$IFEND};
+<implementation>
+
+//==============================================================================
+<initialization>
+<finalization>
+
+end.
