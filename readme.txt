@@ -76,7 +76,7 @@ List of folders with description of their content:
 
   ./condenser
 
-    Condeser program and supporting files (only in branch "condeser").
+    Condeser program and supporting files (only in branch "condenser").
 
   ./examples
 
