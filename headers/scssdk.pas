@@ -15,7 +15,7 @@
 
   Version 1.0 (2023-02-02)
 
-  Last changed 2023-02-02
+  Last changed 2023-12-29
 
   ©2023 František Milt
 
@@ -331,6 +331,7 @@ Function APIStringToSDKString(const Str: scs_string_t): SDKString;
 begin
 If Assigned(Str) then
   begin
+    Result := '';
     SetLength(Result,{$IF Declared(AnsiStrings)}AnsiStrings.{$IFEND}StrLen(PAnsiChar(Str)));
     Move(Str^,PUTF8Char(Result)^,Length(Result) * SizeOf(UTF8Char));
   end
