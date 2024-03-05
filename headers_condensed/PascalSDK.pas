@@ -57,7 +57,7 @@ unit PascalSDK;
   {$INLINE ON}
   {$DEFINE CanInline}
 {$ELSE}
-  {$IF CompilerVersion >= 17 then}  // Delphi 2005+
+  {$IF CompilerVersion >= 17} // Delphi 2005+
     {$DEFINE CanInline}
   {$ELSE}
     {$UNDEF CanInline}
