@@ -15,7 +15,7 @@
 
   Version 1.0 (2023-02-02)
 
-  Last changed 2023-02-02
+  Last changed 2023-12-29
 
   ©2023 František Milt
 
@@ -38,6 +38,7 @@
     StrRect  - github.com/TheLazyTomcat/Lib.StrRect
 
 ===============================================================================}
+{!tun_end!}
 (*<unit>*)
 (**
  * @file scssdk_telemetry_common_configs.h
@@ -583,7 +584,7 @@ const
  * Limited to C-identifier characters and dots.
  *
  * Type: string
- *(
+ *)
   SCS_TELEMETRY_CONFIG_ATTRIBUTE_destination_company_id = SDKString('destination.company.id');
 
 (**

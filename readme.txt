@@ -18,8 +18,8 @@ interface. Currently (february 2023), this mechanism is supported by Euro Truck
 Simulator 2 and American Truck Simulator.
 
 PascalSDK project provides a pascal translation of the entire SDK for use in
-Delphi (version 7 or never) and Free Pascal Compiler (FPC version 2.6.4 or
-never) - possibly running under Lazarus IDE.
+Delphi (version 7 or newer) and Free Pascal Compiler (FPC version 2.6.4 or
+newer) - possibly running under Lazarus IDE.
 
 Current version of PascalSDK (1.0) is based on SCS SDK version 1.14.
 
@@ -76,7 +76,7 @@ List of folders with description of their content:
 
   ./condenser
 
-    Condeser program and supporting files (only in branch "condeser").
+    Condeser program and supporting files (only in branch "condenser").
 
   ./examples
 

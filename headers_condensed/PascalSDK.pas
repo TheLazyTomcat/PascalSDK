@@ -15,7 +15,7 @@
 
   Version 1.0 (2023-02-02)
 
-  Last changed 2023-02-02
+  Last changed 2023-12-29
 
   ©2023 František Milt
 
@@ -38,6 +38,7 @@
     StrRect  - github.com/TheLazyTomcat/Lib.StrRect
 
 ===============================================================================}
+{!tun_end!}
 unit PascalSDK;
 
 {$IF defined(CPUX86_64) or defined(CPUX64)}
@@ -57,7 +58,7 @@ unit PascalSDK;
   {$INLINE ON}
   {$DEFINE CanInline}
 {$ELSE}
-  {$IF CompilerVersion >= 17 then}  // Delphi 2005+
+  {$IF CompilerVersion >= 17} // Delphi 2005+
     {$DEFINE CanInline}
   {$ELSE}
     {$UNDEF CanInline}
@@ -1767,7 +1768,7 @@ const
  * Limited to C-identifier characters and dots.
  *
  * Type: string
- *(
+ *)
   SCS_TELEMETRY_CONFIG_ATTRIBUTE_destination_company_id = SDKString('destination.company.id');
 
 (**
@@ -3211,6 +3212,7 @@ Function APIStringToSDKString(const Str: scs_string_t): SDKString;
 begin
 If Assigned(Str) then
   begin
+    Result := '';
     SetLength(Result,{$IF Declared(AnsiStrings)}AnsiStrings.{$IFEND}StrLen(PAnsiChar(Str)));
     Move(Str^,PUTF8Char(Result)^,Length(Result) * SizeOf(UTF8Char));
   end
