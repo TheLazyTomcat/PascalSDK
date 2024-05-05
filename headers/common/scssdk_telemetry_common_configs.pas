@@ -38,6 +38,7 @@
     StrRect  - github.com/TheLazyTomcat/Lib.StrRect
 
 ===============================================================================}
+{!tun_end!}
 (*<unit>*)
 (**
  * @file scssdk_telemetry_common_configs.h

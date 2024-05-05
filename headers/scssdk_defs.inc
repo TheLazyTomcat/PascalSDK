@@ -13,14 +13,14 @@
     communication between a running game and a loaded dynamic library into
     the Pascal programming language.
 
-  Version 1.0 (2023-02-01)
+  Version 1.0 (2023-02-02)
 
-  Last changed 2023-02-01
+  Last changed 2023-12-29
 
-  Â©2023 FrantiÅ¡ek Milt
+  ©2023 František Milt
 
   Contacts:
-    FrantiÅ¡ek Milt: frantisek.milt@gmail.com
+    František Milt: frantisek.milt@gmail.com
 
   Support:
     If you find this code useful, please consider supporting its author(s) by
@@ -38,6 +38,7 @@
     StrRect  - github.com/TheLazyTomcat/Lib.StrRect
 
 ===============================================================================}
+{!tun_end!}
 (*<body>*)
 {$IF defined(CPUX86_64) or defined(CPUX64)}
   {$DEFINE SCS_ARCHITECTURE_x64}
